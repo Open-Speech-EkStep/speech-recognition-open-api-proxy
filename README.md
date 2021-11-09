@@ -1,4 +1,4 @@
-## Proxy for Open Speech API
+## Proxy for Open Speech API 
 
 This project is a proxy to provide support for real-time streaming functionality for Open Speech API https://open-speech-ekstep.github.io/ from browsers or any clients that doesn't support gprc bi-directional streaming.
 
