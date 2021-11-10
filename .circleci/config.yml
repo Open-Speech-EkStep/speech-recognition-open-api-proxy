@@ -13,11 +13,11 @@ parameters:
     default: "1.0.0"
 
 jobs:
-  build_and_deploy_api_image_to_registry:
+  build_and_deploy_api_proxy_image_to_registry:
     machine:
       image: ubuntu-2004:202101-01
       resource_class: xlarge
-    working_directory: ~/speech-recognition-model-api/
+    working_directory: ~/speech-recognition-model-api-proxy/
     steps:
       - when:
           condition: << pipeline.parameters.trigger_pipeline >>
@@ -59,8 +59,8 @@ workflows:
   main_workflow:
     when: << pipeline.parameters.trigger_pipeline >>
     jobs:
-     - build_and_deploy_api_image_to_registry:
-         name: build_and_deploy_api_image_to_registry
+     - build_and_deploy_api_proxy_image_to_registry:
+         name: build_and_deploy_api_proxy_image_to_registry
          filters:
            branches:
              only: master
