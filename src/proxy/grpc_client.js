@@ -16,7 +16,7 @@ let packageDefinition = protoLoader.loadSync(PROTO_PATH, {
     defaults: true,
     oneofs: true,
 });
-let proto = grpc.loadPackageDefinition(packageDefinition).recognize;
+let proto = grpc.loadPackageDefinition(packageDefinition).ekstep.speech_recognition;
 
 class GrpcClient {
     constructor(language){
@@ -32,7 +32,7 @@ class GrpcClient {
     
     #getGrpcClient() {
         let grpc_ip = this.#getGrpcIp();
-        let grpc_client = new proto.Recognize(
+        let grpc_client = new proto.SpeechRecognizer(
             grpc_ip,
             grpc.credentials.createInsecure()
         );
@@ -41,15 +41,6 @@ class GrpcClient {
 
     connect(){
         this.client = this.#getGrpcClient();
-    }
-
-    getSrtResponse = (msg) => {
-        return new Promise((resolve, reject) => {
-            this.client.recognize_srt(msg, (error, response) => {
-                if (error) { reject(error); }
-                resolve(response);
-            });
-        });
     }
 
     getPunctuation = (msg) => {
