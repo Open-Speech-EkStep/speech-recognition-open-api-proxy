@@ -1,4 +1,5 @@
-let ip_language_map = {};
+const {getLanguageIpMap} = require('./language_config');
+let languageIpMap = getLanguageIpMap();
 const grpc = require("grpc");
 grpc.max_send_message_length = 50 * 1024 * 1024;
 // grpc.max_receive_message_length = 50 * 1024 * 1024;
@@ -17,10 +18,6 @@ let packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 });
 let proto = grpc.loadPackageDefinition(packageDefinition).recognize;
 
-const setLanguageMap = (path) => {
-    ip_language_map = require(path);
-};
-
 class GrpcClient {
     constructor(language){
         this.language = language;
@@ -30,13 +27,7 @@ class GrpcClient {
 
     #getGrpcIp = () => {
         let language = this.language;
-        let grpc_ip = "localhost:55102";
-        for (let ip in ip_language_map) {
-            if (ip_language_map[ip].includes(language)) {
-                return ip;
-            }
-        }
-        return grpc_ip;
+        return languageIpMap[language];
     }
     
     #getGrpcClient() {
@@ -103,4 +94,4 @@ class GrpcClient {
     
 }
 
-module.exports = {setLanguageMap, GrpcClient};
+module.exports = GrpcClient;

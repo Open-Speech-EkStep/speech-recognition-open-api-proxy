@@ -1,9 +1,8 @@
 // var ss = require('socket.io-stream');
 // ss.forceBase64 = true;
-const MAX_SOCKET_CONNECTIONS = process.env.MAX_CONNECTIONS || 80;
-const {GrpcClient} = require('./grpc_client');
+const GrpcClient = require('./grpc_client');
 const idDict = {};
-
+const {getClusterConnectionCountMap, getLanguageIpMap, getLanguages} = require("./language_config");
 
 const initializeSocketServer = (server) => {
     return require("socket.io")(server, {
@@ -14,7 +13,13 @@ const initializeSocketServer = (server) => {
 }
 
 const listenToSocketConnections = (io) => {
-
+    const maxClusterConnectionCountMap = getClusterConnectionCountMap();
+    const languageIpMap = getLanguageIpMap();
+    const languages = getLanguages();
+    const clusterConnectionCountMap = {};
+    for (const clusterAddress in maxClusterConnectionCountMap) {
+        clusterConnectionCountMap[clusterAddress] = 0;
+    }
     function respondToUserSocket(user, action, response="", language=""){
         io.to(user).emit(action, response, language);
     }
@@ -66,24 +71,45 @@ const listenToSocketConnections = (io) => {
         return msg;
     }
 
-    io.on("connection", (socket) => {
+    function getUserCount(socket){
+        const numUsers = socket.client.conn.server.clientsCount;
+        return numUsers;
+    }
 
-        let grpcClient = new GrpcClient(socket.handshake.query.language);
+    io.on("connection", (socket) => {
+        const currentLanguage = socket.handshake.query.language;
+        if(!languages.includes(currentLanguage)){
+            socket.emit("abort");
+            socket.disconnect();
+            return;
+        }
+
+        const clusterAddress = languageIpMap[currentLanguage];
+        if (clusterConnectionCountMap[clusterAddress] >= maxClusterConnectionCountMap[clusterAddress]) {
+            socket.emit("abort");
+            socket.disconnect();
+            return;
+        }
+
+        let grpcClient = new GrpcClient(currentLanguage);
         grpcClient.connect();
 
         socket.on("disconnect", (reason) => {
             grpcClient.stopStream()
             grpcClient.disconnect()
-            console.log(socket.id, "got disconnected", reason);
+            console.log(socket.id, "got disconnected => Reason:", reason);
+            const numUsers = getUserCount(socket) - 1;
+            console.log("Total users after disconnect = ", numUsers >=0 ? numUsers : 0);
+            const clusterAddress = languageIpMap[currentLanguage];
+            if(clusterConnectionCountMap[clusterAddress] > 0)
+                clusterConnectionCountMap[clusterAddress]-=1
         });
     
-        const numUsers = socket.client.conn.server.clientsCount;
-        console.log("Number of users => ", numUsers);
-        if (numUsers > MAX_SOCKET_CONNECTIONS) {
-            socket.emit("abort");
-            socket.disconnect();
-            return;
-        }
+        
+        const numUsers = getUserCount(socket);
+        console.log("Total users = ", numUsers);
+        clusterConnectionCountMap[clusterAddress]+=1;
+        console.log(`Connection count of cluster-${Object.keys(clusterConnectionCountMap).indexOf(clusterAddress)} with ${currentLanguage} = `, clusterConnectionCountMap[clusterAddress])
     
         socket.on('connect_mic_stream', () => {
             onUserConnected(socket, grpcClient);
