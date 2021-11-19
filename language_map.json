@@ -1,43 +1,28 @@
 {
-    "35.192.29.24:55102": {
-        "languages": [
-            "ta",
-            "bo",
-            "bn",
-            "en-IN-BIO",
-            "ne",
-            "kn"
-        ],
-        "maxConnectionCount": 50
-    },
-    "35.232.162.125:55102": {
-        "languages": [
-            "raj",
-            "mal",
-            "or",
-            "sa",
-            "mai",
-            "ur",
-            "asm",
-            "doi"
-        ],
-        "maxConnectionCount": 50
-    },
-    "34.72.59.101:55102": {
-        "languages": [
-            "gu",
-            "te",
-            "mr",
-            "pa",
-            "en-test"
-        ],
-        "maxConnectionCount": 50
-    },
-    "35.225.39.113:55102": {
-        "languages": [
-            "hi",
-            "en-IN"
-        ],
-        "maxConnectionCount": 50
+    "localhost:50151": {
+      "languages": [
+        "ta",
+        "bho",
+        "bn",
+        "en_bio",
+        "ne",
+        "kn",
+        "raj",
+        "ml",
+        "or",
+        "sa",
+        "mai",
+        "ur",
+        "as",
+        "doi",
+        "gu",
+        "te",
+        "mr",
+        "pa",
+        "hi",
+        "en"
+      ],
+      "maxConnectionCount": 10000
     }
-}
+  }
+  

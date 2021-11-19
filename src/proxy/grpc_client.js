@@ -44,8 +44,10 @@ class GrpcClient {
     }
 
     getPunctuation = (msg) => {
+        let meta = new grpc.Metadata();
+        meta.add('language', this.language);
         return new Promise((resolve, reject) => {
-            this.client.punctuate(msg, (error, response) => {
+            this.client.punctuate(msg,meta, (error, response) => {
                 if (error) { reject(error); }
                 resolve(response);
             });
@@ -54,7 +56,9 @@ class GrpcClient {
 
     startStream(responseListener = () => {}, errorListener = () => {}){
         if(this.client !== null && this.client !== undefined){
-            this.stream = this.client.recognize_audio()
+            let meta = new grpc.Metadata();
+            meta.add('language', this.language);
+            this.stream = this.client.recognize_audio(meta)
             this.stream.on("data", responseListener);
             this.stream.on("error", errorListener);
         } else {
