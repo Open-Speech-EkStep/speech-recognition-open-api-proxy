@@ -5,11 +5,7 @@ const idDict = {};
 const {getClusterConnectionCountMap, getLanguageIpMap, getLanguages} = require("./language_config");
 
 const initializeSocketServer = (server) => {
-    return require("socket.io")(server, {
-        cors: {
-            origin: "*"
-        }
-    });
+    return require("socket.io")(server);
 }
 
 const listenToSocketConnections = (io) => {
