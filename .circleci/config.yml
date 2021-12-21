@@ -10,7 +10,7 @@ parameters:
     default: speech_recognition_model_api_proxy
   package_version:
     type: string
-    default: "1.0.2"
+    default: "1.0.3"
 
 jobs:
   build_and_deploy_api_proxy_image_to_registry:
