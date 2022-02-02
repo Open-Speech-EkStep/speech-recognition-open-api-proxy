@@ -21,6 +21,7 @@
         "pa",
         "hi",
         "en"
+        "hi_en"
       ],
       "maxConnectionCount": 10000
     }
