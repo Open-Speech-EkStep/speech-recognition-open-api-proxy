@@ -2,13 +2,20 @@
 
 This project is a proxy to provide support for real-time streaming functionality for Open Speech API https://open-speech-ekstep.github.io/ from browsers or any clients that doesn't support gprc bi-directional streaming.
 
-### How to use it
+## Table of Contents:
+* [Getting Started](#getting-Started)
+* [Quick Start](#quick-start)
+* [Reference](#reference)
+* [Examples](#examples)
+* [Getting Help](#getting-help)
 
-**Step 1: Install the package**
+## Getting Started
+
+### Step 1: Install the package
 
 `npm i `
 
-**Step 2: Configure model hosted address its respective languages**
+### Step 2: Configure model hosted address its respective languages
 - Add model hosted address in language_map.json file in the project root.
     Example: 
     ```
@@ -26,7 +33,7 @@ This project is a proxy to provide support for real-time streaming functionality
 
 - Set the folder path of language_map.json as env variable: `config_base_path="<project_root_folder_path>"` (eg: /users/node/speech-recognition-open-api-proxy)
 
-**Step 3: Run**
+### Step 3: Run
 ```
 npm start
 ```
