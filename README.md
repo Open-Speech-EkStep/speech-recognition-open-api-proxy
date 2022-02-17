@@ -4,9 +4,6 @@ This project is a proxy to provide support for real-time streaming functionality
 
 ## Table of Contents:
 * [Getting Started](#getting-Started)
-* [Quick Start](#quick-start)
-* [Reference](#reference)
-* [Examples](#examples)
 * [Getting Help](#getting-help)
 
 ## Getting Started
@@ -42,3 +39,6 @@ npm start
 This service url can be used in [speech-recognition-open-api-client](https://github.com/Open-Speech-EkStep/speech-recognition-open-api-client)
 
 
+## Getting Help
+
+The best way to interact with our team is through GitHub. Please open an issue in github.
