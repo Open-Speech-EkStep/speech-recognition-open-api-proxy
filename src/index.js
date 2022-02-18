@@ -5,6 +5,6 @@ const setProxy = require('./proxy');
 
 setProxy(server);
 
-const PORT = 9009;
+const PORT = process.env.PORT || 9009;
 server.listen(PORT);
 console.log("Listening in port => " + PORT);
