@@ -30,7 +30,7 @@ class GrpcClient {
         return languageIpMap[language];
     }
 
-    #getGrpcClient() {
+    #getGrpcClient = () => {
         let grpc_ip = this.#getGrpcIp();
         let grpc_client = new proto.SpeechRecognizer(
             grpc_ip,
