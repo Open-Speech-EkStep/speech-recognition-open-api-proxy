@@ -1,6 +1,6 @@
 # Proxy for Open Speech API
 
-This project is a proxy to provide support for real-time streaming functionality for Open Speech API https://open-speech-ekstep.github.io/ from browsers or any clients that doesn't support gprc bi-directional streaming.
+This project is a proxy to provide support for real-time streaming functionality for Open Speech API https://open-speech-ekstep.github.io/ from browsers or any clients that doesn't support gprc bi-directional streaming. Refer the real-time streaming documentation for architecture details https://open-speech-ekstep.github.io/asr_streaming_service/. 
 
 ## Table of Contents
 
@@ -11,7 +11,7 @@ This project is a proxy to provide support for real-time streaming functionality
 
 ### Step 1: Install the package
 
-```nodejs
+```shell
 npm i 
 ```
 
@@ -29,7 +29,7 @@ npm i
         "<ip-address/domain>:<port>": [
             "ta",
             "te"
-        ],
+        ]
     }
     ```
 
@@ -37,11 +37,11 @@ npm i
 
 ### Step 3: Run
 
-```nodejs
+```shell
 npm start
 ```
 
-This service url can be used in [speech-recognition-open-api-client](https://github.com/Open-Speech-EkStep/speech-recognition-open-api-client)
+This service url can be used in [speech-recognition-open-api-client](https://github.com/Open-Speech-EkStep/speech-recognition-open-api-client) for real-time inferencing experience.
 
 ## Note
 
